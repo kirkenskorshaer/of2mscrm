@@ -3,8 +3,6 @@ from flask import request
 
 
 class OauthConnect(object):
-	def __init__(self):
-		super(OauthConnect, self).__init__()
 
 	def make_request_headers(self, config):
 		if request.headers is None:
