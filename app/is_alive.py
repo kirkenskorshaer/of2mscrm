@@ -10,9 +10,8 @@ from json.decoder import JSONDecodeError
 def is_alive():
 	query = "/contacts?$select=contactid&$top=1"
 	config = config_data.ConfigData()
-	connector = oauth_connect.OauthConnect()
 
-	headers, header_error = connector.make_request_headers(config)
+	headers, header_error = oauth_connect.connector.get_request_headers(config)
 
 	is_alive_response = {
 		'is_alive': False,
