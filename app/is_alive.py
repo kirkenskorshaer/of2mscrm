@@ -17,7 +17,7 @@ def is_alive():
 	is_alive_response = {
 		'is_alive': False,
 		'error': header_error,
-		'proof': ''
+		'proof': None
 	}
 
 	if headers is None:
