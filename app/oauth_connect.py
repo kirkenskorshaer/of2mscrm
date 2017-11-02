@@ -1,6 +1,8 @@
+import requests
 from adal import AuthenticationContext
 from flask import request
 from datetime import datetime, timedelta
+import json.decoder
 
 
 class OauthConnect(object):
@@ -51,7 +53,38 @@ class OauthConnect(object):
 			'Accept': 'application/json',
 			'Content-Type': 'application/json; charset=utf-8',
 			'Prefer': 'odata.maxpagesize=500',
-			'Prefer': 'odata.include-annotations=OData.Community.Display.V1.FormattedValue'
+			'Prefer': 'odata.include-annotations=OData.Community.Display.V1.FormattedValue',
+			'Prefer': 'return=representation'
 		}
+
+	def execute_get_query(self, query, config):
+		return self._execute_query(query, data=None, config=config, method=requests.get)
+
+	def execute_post_query(self, query, data, config):
+		return self._execute_query(query, data=data, config=config, method=requests.post)
+
+	def execute_put_query(self, query, data, config):
+		return self._execute_query(query, data=data, config=config, method=requests.put)
+
+	def _execute_query(self, query, data, config, method):
+		headers, header_error = self.get_request_headers(config)
+
+		if headers is None:
+			None, header_error
+
+		url = config.api_url + query
+		crm_response = None
+		if data is None:
+			crm_response = method(url, headers=headers)
+		else:
+			crm_response = method(url, json=data, headers=headers)
+
+		crm_json = None
+		try:
+			crm_json = crm_response.json()
+		except json.decoder.JSONDecodeError as message:
+			return None, repr(crm_response)
+
+		return crm_json, None
 
 connector = OauthConnect()
