@@ -87,4 +87,14 @@ class OauthConnect(object):
 
 		return crm_json, None
 
+	def associate(self, parent_name, parent_value, child_reference_name, child_name, child_value, config):
+		query = child_name + '(' + child_value + ')/' + child_reference_name + '/$ref'
+
+		data = {
+			'@odata.id': config.api_url + parent_name + '(' + parent_value + ')'
+		}
+
+		return self.execute_put_query(query, data, config)
+
+
 connector = OauthConnect()
