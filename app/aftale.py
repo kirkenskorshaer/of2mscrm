@@ -39,15 +39,37 @@ def create_aftale():
 
 @app.route('/aftale', methods=['PUT'])
 def update_aftale():
+	config = config_data.ConfigData()
+
 	aftale_response = {
 		'error': None
 	}
 
 	error, aftale_request = schema_validation.validate_json_schema(aftale_put_schema.get_schema(), request)
-
 	if error is not None:
 		aftale_response['error'] = error
 		return jsonify(aftale_response)
+
+	query = 'nrq_bidragsaftales(' + aftale_request['aftale_id'] + ')?$select=nrq_bidragsaftaleid'
+
+	crm_aftale = {
+		'nrq_frekvens': 'changed'
+	}
+
+	result_json, error = oauth_connect.connector.execute_put_query(query, crm_aftale, config)
+	if error is not None:
+		aftale_response['error'] = error
+		return jsonify(aftale_response)
+
+	try:
+		returned_id = result_json['value'][0]['nrq_bidragsaftaleid']
+	except KeyError:
+		aftale_response['error'] = repr(result_json)
+
+	print(repr(result_json))
+
+	if returned_id != aftale_request['aftale_id']:
+		aftale_response['error'] = 'id (' + aftale_request['aftale_id'] + ') is not (' + returned_id + ')'
 
 	return jsonify(aftale_response)
 

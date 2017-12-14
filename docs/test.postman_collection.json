@@ -1,0 +1,126 @@
+{
+	"info": {
+		"name": "of2mscrm local test",
+		"_postman_id": "f282b9db-4082-d396-a353-673441a8382d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:5000/aftale",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "38714b11-03fb-46ca-889e-fc0809e1c524",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"aftale_id\", pm.response.json().aftale_id);",
+							"pm.globals.set(\"contact_id\", pm.response.json().contact_id);",
+							"",
+							"pm.test(\"no errors\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error).to.eql(null);",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "73293a71-fabf-4225-b845-0fb652abaf06",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"auth\", \"email;password\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "{{auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"aftale\":\r\n\t{\r\n\t\t\"accountno\": 1,\r\n\t\t\"agreement_start\": \"2001-02-03T04:05:06Z\",\r\n\t\t\"amount\": 123,\r\n\t\t\"amount_type\": \"amtype\",\r\n\t\t\"currency\": \"\",\r\n\t\t\"date\": \"\",\r\n\t\t\"date_end\": \"2007-08-09T10:11:12Z\",\r\n\t\t\"frequency\": \"always\",\r\n\t\t\"gateway\": \"\",\r\n\t\t\"media\": \"\",\r\n\t\t\"message\": \"\",\r\n\t\t\"paymenttype\": \"pmn type\",\r\n\t\t\"phone\": \"\",\r\n\t\t\"project\": \"\",\r\n\t\t\"sms_keyword\": \"\",\r\n\t\t\"sortno\": \"\",\r\n\t\t\"state\": \"\",\r\n\t\t\"subscriptionid\": \"\"\r\n\t},\r\n\t\"contact\": {\r\n\t\t\"phone\": \"12345678\",\r\n\t\t\"address\": \"address 1\",\r\n\t\t\"address_line_2\": \"address 2\",\r\n\t\t\"city\": \"by\",\r\n\t\t\"country\": \"land\",\r\n\t\t\"cpr\": \"1234567890\",\r\n\t\t\"email\": \"test_of2mscrm_1@korsnet.dk\",\r\n\t\t\"firstname\": \"test_of2mscrm_1\",\r\n\t\t\"lastname\": \"lastname\",\r\n\t\t\"middlename\": \"middlename\",\r\n\t\t\"permissions\": \"permission\",\r\n\t\t\"postcode\": \"1234\"\r\n\t}\r\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/aftale",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"aftale"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/aftale put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f435e5e-cb22-4832-86df-0b55c29d2a26",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"no errors\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error).to.eql(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "{{auth}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"aftale_id\": \"{{aftale_id}}\",\r\n\t\"state\": \"\",\r\n\t\"gateway_fejlkode\": \"\"\r\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/aftale",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"aftale"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
