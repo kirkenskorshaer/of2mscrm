@@ -3,7 +3,7 @@ def get_schema():
 		'type': 'object',
 		'properties':
 		{
-			'aftale_id': {'type': 'integer'},
+			'aftale_id': {'type': 'string'},
 			'state': {'type': 'string'},
 			'gateway_fejlkode': {'type': 'string'}
 		},
