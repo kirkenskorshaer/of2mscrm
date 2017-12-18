@@ -66,6 +66,9 @@ class OauthConnect(object):
 	def execute_put_query(self, query, data, config):
 		return self._execute_query(query, data=data, config=config, method=requests.put)
 
+	def execute_patch_query(self, query, data, config):
+		return self._execute_query(query, data=data, config=config, method=requests.patch)
+
 	def _execute_query(self, query, data, config, method):
 		headers, header_error = self.get_request_headers(config)
 
