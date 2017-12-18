@@ -39,6 +39,8 @@ def create_aftale():
 
 @app.route('/aftale', methods=['PATCH'])
 def update_aftale():
+	config = config_data.ConfigData()
+
 	aftale_response = {
 		'error': None
 	}
@@ -48,7 +50,29 @@ def update_aftale():
 		aftale_response['error'] = error
 		return jsonify(aftale_response)
 
+	returned_id, aftale_response['error'] = _update_aftale(aftale_request, config)
+
+	if returned_id != aftale_request['aftale_id']:
+		aftale_response['error'] = 'id (' + aftale_request['aftale_id'] + ') is not (' + repr(returned_id) + ')'
+
 	return jsonify(aftale_response)
+
+
+def _update_aftale(aftale_request, config):
+	query = 'nrq_bidragsaftales(' + aftale_request['aftale_id'] + ')?$select=nrq_bidragsaftaleid'
+
+	crm_aftale = {
+		'nrq_frekvens': 'changed'
+	}
+
+	result_json, error = oauth_connect.connector.execute_patch_query(query, crm_aftale, config)
+	if error is not None:
+		return None, repr(result_json)
+
+	try:
+		return result_json['nrq_bidragsaftaleid'], None
+	except KeyError:
+		return None, repr(result_json)
 
 
 def _get_contact_id_from_crm(aftale_request, config):
