@@ -11,6 +11,7 @@ class ConfigData():
 
 	def __init__(self):
 		self.production = False
+		self.workflow_test = '31339296-EDB7-4913-A5B3-B1A71794E072'
 
 		if request.headers is not None and 'environment' in request.headers and request.headers['environment'] == 'prod':
 			self.production = True
