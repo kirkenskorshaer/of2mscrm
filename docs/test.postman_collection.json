@@ -1,0 +1,354 @@
+{
+	"info": {
+		"name": "of2mscrm test",
+		"_postman_id": "be775488-1b3c-7851-9868-646fd9474d11",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "aftale oprettes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "38714b11-03fb-46ca-889e-fc0809e1c524",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"aftale_id\", pm.response.json().aftale_id);",
+							"pm.globals.set(\"contact_id\", pm.response.json().contact_id);",
+							"",
+							"pm.test(\"no errors\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error).to.eql(null);",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "70c50f60-0e42-4ddb-9ea6-f7122223c667",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"auth\", \"email;password\");",
+							"//pm.globals.set(\"baseurl\", \"http://127.0.0.1:5000/\");",
+							"pm.globals.set(\"baseurl\", \"https://of2mscrm.azurewebsites.net/\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "{{auth}}"
+					},
+					{
+						"key": "environment",
+						"value": "test"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"aftale\":\r\n\t{\r\n\t\t\"accountno\": 1,\r\n\t\t\"agreement_start\": \"2001-02-03T04:05:06Z\",\r\n\t\t\"amount\": 123,\r\n\t\t\"amount_type\": \"amtype\",\r\n\t\t\"currency\": \"\",\r\n\t\t\"date\": \"\",\r\n\t\t\"date_end\": \"2007-08-09T10:11:12Z\",\r\n\t\t\"frequency\": \"always\",\r\n\t\t\"gateway\": \"\",\r\n\t\t\"media\": \"\",\r\n\t\t\"message\": \"\",\r\n\t\t\"paymenttype\": \"pmn type\",\r\n\t\t\"phone\": \"\",\r\n\t\t\"project\": \"\",\r\n\t\t\"sms_keyword\": \"\",\r\n\t\t\"sortno\": \"\",\r\n\t\t\"state\": \"\",\r\n\t\t\"subscriptionid\": \"\"\r\n\t},\r\n\t\"contact\": {\r\n\t\t\"phone\": \"12345678\",\r\n\t\t\"address\": \"address 1\",\r\n\t\t\"address_line_2\": \"address 2\",\r\n\t\t\"city\": \"by\",\r\n\t\t\"country\": \"land\",\r\n\t\t\"cpr\": \"1234567890\",\r\n\t\t\"email\": \"test_of2mscrm_1@korsnet.dk\",\r\n\t\t\"firstname\": \"test_of2mscrm_1\",\r\n\t\t\"lastname\": \"lastname\",\r\n\t\t\"middlename\": \"middlename\",\r\n\t\t\"permissions\": \"permission\",\r\n\t\t\"postcode\": \"1234\"\r\n\t}\r\n}"
+				},
+				"url": {
+					"raw": "{{baseurl}}aftale",
+					"host": [
+						"{{baseurl}}aftale"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "aftale opdateres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f435e5e-cb22-4832-86df-0b55c29d2a26",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"no errors\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error).to.eql(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "authorization",
+						"value": "{{auth}}"
+					},
+					{
+						"key": "environment",
+						"value": "test"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"aftale_id\": \"{{aftale_id}}\",\r\n\t\"state\": \"\",\r\n\t\"gateway_fejlkode\": \"\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseurl}}aftale",
+					"host": [
+						"{{baseurl}}aftale"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "indbetaling oprettes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b126b467-69a2-4774-9f2a-09082742b1e5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"indbetaling_id\", pm.response.json().indbetaling_id);",
+							"",
+							"pm.test(\"no errors\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error).to.eql(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{auth}}"
+					},
+					{
+						"key": "environment",
+						"value": "test"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"aftale\":\r\n\t{\r\n\t\t\"aftale_id\": \"{{aftale_id}}\",\r\n\t\t\"charge_ts\": \"2\",\r\n\t\t\"gateway_fejlkode\": \"3\"\r\n\t},\r\n\t\"indbetaling\":\r\n\t{\r\n\t\t\"status\": \"indb sts\"\r\n\t}\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{baseurl}}indbetaling",
+					"host": [
+						"{{baseurl}}indbetaling"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "indbetaling opdateres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "49ad29e9-bafb-4454-a217-62035389d65b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"no errors\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error).to.eql(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{auth}}"
+					},
+					{
+						"key": "environment",
+						"value": "test"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"indbetaling_id\": \"{{indbetaling_id}}\",\r\n\t\"status\": \"changed status\",\r\n\t\"gateway_fejlkode\": \"err code\",\r\n\t\"dato\": \"2001-02-03T04:05:06Z\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{baseurl}}indbetaling",
+					"host": [
+						"{{baseurl}}indbetaling"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "schema/aftale/post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c62c5d92-8552-4536-b726-5045be262a58",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"indbetaling_id\": \"{{indbetaling_id}}\",\r\n\t\"status\": \"changed status\",\r\n\t\"gateway_fejlkode\": \"err code\",\r\n\t\"dato\": \"2001-02-03T04:05:06Z\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{baseurl}}schema/aftale/post",
+					"host": [
+						"{{baseurl}}schema"
+					],
+					"path": [
+						"aftale",
+						"post"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "schema/aftale/patch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c62c5d92-8552-4536-b726-5045be262a58",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"indbetaling_id\": \"{{indbetaling_id}}\",\r\n\t\"status\": \"changed status\",\r\n\t\"gateway_fejlkode\": \"err code\",\r\n\t\"dato\": \"2001-02-03T04:05:06Z\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{baseurl}}schema/aftale/patch",
+					"host": [
+						"{{baseurl}}schema"
+					],
+					"path": [
+						"aftale",
+						"patch"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "schema/indbetaling/post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c62c5d92-8552-4536-b726-5045be262a58",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"indbetaling_id\": \"{{indbetaling_id}}\",\r\n\t\"status\": \"changed status\",\r\n\t\"gateway_fejlkode\": \"err code\",\r\n\t\"dato\": \"2001-02-03T04:05:06Z\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{baseurl}}schema/indbetaling/post",
+					"host": [
+						"{{baseurl}}schema"
+					],
+					"path": [
+						"indbetaling",
+						"post"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "schema/indbetaling/patch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c62c5d92-8552-4536-b726-5045be262a58",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"indbetaling_id\": \"{{indbetaling_id}}\",\r\n\t\"status\": \"changed status\",\r\n\t\"gateway_fejlkode\": \"err code\",\r\n\t\"dato\": \"2001-02-03T04:05:06Z\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{baseurl}}schema/indbetaling/patch",
+					"host": [
+						"{{baseurl}}schema"
+					],
+					"path": [
+						"indbetaling",
+						"patch"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
