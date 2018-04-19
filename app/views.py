@@ -5,4 +5,5 @@ from app import is_alive
 #from app import indbetaling
 #from app import schema_get
 from app import hook
+from app import entity_hook
 #from app import echo
